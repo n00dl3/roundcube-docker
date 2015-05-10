@@ -10,7 +10,26 @@
 // Currently supported db_providers: mysql, pgsql, sqlite, mssql or sqlsrv
 // For examples see http://pear.php.net/manual/en/package.database.mdb2.intro-dsn.php
 // NOTE: for SQLite use absolute path: 'sqlite:////full/path/to/sqlite.db?mode=0646'
-$config['db_dsnw'] = 'sqlite:////rc/roundcubemail.sqlite?mode=0640';
+$db_driver=getenv("DB_DRIVER");
+if($db_driver){
+  $db_user = getenv("DB_USER")?getenv("DB_USER"):null;
+  $db_passwd=getenv("DB_PASSWD")?getenv("DB_PASSWD"):null;
+  $db_name=getenv("DB_NAME")?getenv("DB_NAME"):null;
+  $db_port = getenv("DB_PORT")?getenv("DB_PORT"):null;
+  if(!$db_user||!$db_passwd||!$db_name)
+    throw new Exception("no user or password defined for database connection, please provide one via environment variables DB_USER, DB_NAME and DB_PASSWD");
+  else{
+    $dsn=$db_driver.'://'.$db_user.':'.$db_passwd.'@db'
+    if($db_port){
+      $dsn.=':'.$db_port;
+    }
+    $dsn.='/'.$db_name;
+    $config['db_dsnw'] = $dsn;
+  }
+
+}else{
+  $config['db_dsnw'] = 'sqlite:////rc/roundcubemail.sqlite?mode=0640';
+}
 
 // ----------------------------------
 // IMAP
@@ -81,4 +100,3 @@ $config['plugins'] = array();
 // the default locale setting (leave empty for auto-detection)
 // RFC1766 formatted language name like en_US, de_DE, de_CH, fr_FR, pt_BR
 $config['language'] = 'en_US';
-
