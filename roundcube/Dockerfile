@@ -14,9 +14,11 @@ RUN wget http://downloads.sourceforge.net/project/roundcubemail/roundcubemail/1.
 RUN mv /root/roundcubemail-1.1.1 /var/www/html
 RUN mkdir /rc
 
-VOLUME /var/www/html
 ADD launch.sh /etc/service/owncloud/run
 RUN chmod +x /etc/service/owncloud/run
 
 VOLUME /rc
+VOLUME /var/www/html
+
+EXPOSE 80
 CMD [ "bash", "/root/launch.sh" ]
