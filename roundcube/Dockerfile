@@ -10,7 +10,7 @@ RUN apt-get install -y --no-install-recommends \
 RUN rm -rf /var/www/html/*
 WORKDIR /root
 # when roundcube grows older, change version in the download link, but also in the 'mv' command
-RUN wget http://downloads.sourceforge.net/project/roundcubemail/roundcubemail/1.1.1/roundcubemail-1.1.1.tar.gz -O - | tar xz
+RUN wget https://downloads.sourceforge.net/project/roundcubemail/roundcubemail/1.1.1/roundcubemail-1.1.1-complete.tar.gz -O - | tar xz
 RUN mv /root/roundcubemail-1.1.1 /var/www/html
 RUN mkdir /rc
 
