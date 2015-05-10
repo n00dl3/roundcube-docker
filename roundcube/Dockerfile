@@ -21,4 +21,3 @@ VOLUME /rc
 VOLUME /var/www/html
 
 EXPOSE 80
-CMD [ "bash", "/root/launch.sh" ]
